@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mone - Định danh & Tài chính</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+    <!-- View Toggle Button -->
+    <button id="view-toggle" class="view-toggle-btn">
+        <i class="fa-solid fa-mobile-screen"></i>
+        <span>Chuyển sang App</span>
+    </button>
+
+    <div class="device-frame">
+        <div class="notch"></div>
+        <div class="app-container">
+            <!-- Sidebar (Desktop Navigation) -->
+            <nav class="sidebar">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-fingerprint"></i>
+                    </div>
+                    <span>Mone</span>
+                </div>
+                <ul class="nav-links">
+                    <li class="active" data-tab="profile">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Hồ sơ & Tài chính</span>
+                    </li>
+                    <li data-tab="journey">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Hành trình</span>
+                    </li>
+                    <li data-tab="marketplace">
+                        <i class="fa-solid fa-store"></i>
+                        <span>Cửa hàng</span>
+                    </li>
+                    <li data-tab="identity">
+                        <i class="fa-solid fa-id-card"></i>
+                        <span>Định danh Số</span>
+                    </li>
+                    <li data-tab="settings">
+                        <i class="fa-solid fa-sliders"></i>
+                        <span>Cài đặt</span>
+                    </li>
+                </ul>
+
+                <div class="sidebar-footer">
+                    <div class="user-mini-profile">
+                        <img src="https://ui-avatars.com/api/?name=Mike+N&background=6C63FF&color=fff" alt="Profile">
+                        <div class="user-info">
+                            <h4>Mike Nguyen</h4>
+                            <p>Thành viên Vàng</p>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Onboarding / Chat Interface -->
+                <div id="onboarding-overlay" class="chat-overlay">
+                    <div class="mascot-container bouncing">
+                        <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Mone&backgroundColor=6C63FF"
+                            alt="Mone Mascot">
+                    </div>
+                    <div class="chat-container">
+                        <button class="chat-close-btn" id="chat-close-btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Messages injected by JS -->
+                        </div>
+                        <div class="chat-input-area">
+                            <input type="text" id="user-input" placeholder="Nhập câu trả lời..." disabled>
+                            <button id="send-btn" disabled><i class="fa-solid fa-paper-plane"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 1: PROFILE -->
+                <div id="profile" class="view active">
+                    <div class="content-wrapper">
+                        <header class="top-bar">
+                            <div class="header-content">
+                                <h1 id="page-title">Tổng quan</h1>
+                                <div class="gamification-badges">
+                                    <div class="xp-pill">
+                                        <i class="fa-solid fa-bolt"></i> <span id="xp-count">0</span> XP
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="header-actions">
+                                <div class="big-amount" style="font-size: 1.5rem;">320.5tr</div>
+                            </div>
+                        </header>
+
+                        <!-- Dashboard Grid -->
+                        <div class="bento-grid">
+                            <!-- Net Worth Card -->
+                            <div class="bento-card net-worth-card">
+                                <div class="card-title"><i class="fa-solid fa-wallet"></i> Tài sản ròng</div>
+                                <div class="big-amount">320.5tr</div>
+                                <div class="trend-indicator">
+                                    <i class="fa-solid fa-arrow-trend-up"></i> +12.5%
+                                </div>
+                                <div class="chart-container" style="height: 150px; margin-top: 1rem; width: 100%;">
+                                    <canvas id="netWorthChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Credit Health -->
+                            <div class="bento-card credit-health-card">
+                                <div class="health-item cic">
+                                    <div class="health-label">Điểm CIC</div>
+                                    <div class="health-score">750</div>
+                                    <div class="health-status good">Rất Tốt</div>
+                                </div>
+                                <div class="health-item pcb">
+                                    <div class="health-label">Trạng thái PCB</div>
+                                    <div class="health-score"><i class="fa-solid fa-check"></i></div>
+                                    <div class="health-status good">An Toàn</div>
+                                </div>
+                            </div>
+
+                            <!-- Recent Transactions -->
+                            <div class="bento-card transactions-card">
+                                <div class="card-title">Giao dịch gần đây</div>
+                                <div class="tx-list">
+                                    <div class="tx-item">
+                                        <div class="tx-left">
+                                            <div class="tx-icon" style="background: #E50914; color: white;"><i
+                                                    class="fa-brands fa-netflix"></i></div>
+                                            <div class="tx-info">
+                                                <h4>Netflix</h4>
+                                                <p>Giải trí • Hôm nay</p>
+                                            </div>
+                                        </div>
+                                        <div class="tx-amount">-260.000₫</div>
+                                    </div>
+                                    <div class="tx-item">
+                                        <div class="tx-left">
+                                            <div class="tx-icon" style="background: #00C853; color: white;"><i
+                                                    class="fa-solid fa-briefcase"></i></div>
+                                            <div class="tx-info">
+                                                <h4>Lương Tháng 12</h4>
+                                                <p>Thu nhập • Hôm qua</p>
+                                            </div>
+                                        </div>
+                                        <div class="tx-amount" style="color: #00C853;">+45.000.000₫</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: JOURNEY (New) -->
+                <div id="journey" class="view">
+                    <div class="content-wrapper journey-wrapper">
+                        <header class="journey-header">
+                            <div class="unit-header">
+                                <div class="unit-info">
+                                    <h2>Unit 1</h2>
+                                    <p>Khởi đầu tài chính vững chắc</p>
+                                </div>
+                                <div class="unit-book">
+                                    <i class="fa-solid fa-book-open"></i> Hướng dẫn
+                                </div>
+                            </div>
+                        </header>
+
+                        <div class="journey-path-container">
+                            <!-- Nodes -->
+                            <div class="path-nodes" id="journey-nodes-container">
+                                <!-- Nodes will be injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: MARKETPLACE -->
+                <div id="marketplace" class="view">
+                    <div class="content-wrapper">
+                        <header class="top-bar">
+                            <div class="header-content">
+                                <h1 id="page-title">Cửa hàng</h1>
+                                <p style="color: #888;">Sản phẩm tài chính tốt nhất cho bạn</p>
+                            </div>
+                            <div class="header-actions">
+                                <div class="search-bar">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <input type="text" placeholder="Tìm kiếm...">
+                                </div>
+                            </div>
+                        </header>
+
+                        <!-- Categories -->
+                        <div class="market-tabs-container">
+                            <div class="market-tab active" data-category="all">Tất cả</div>
+                            <div class="market-tab" data-category="credit-cards"><i
+                                    class="fa-regular fa-credit-card"></i> Thẻ Tín Dụng</div>
+                            <div class="market-tab" data-category="loans"><i
+                                    class="fa-solid fa-money-bill-transfer"></i> Vay</div>
+                            <div class="market-tab" data-category="insurance"><i class="fa-solid fa-shield-heart"></i>
+                                Bảo Hiểm</div>
+                            <div class="market-tab" data-category="savings"><i class="fa-solid fa-piggy-bank"></i> Tiết
+                                Kiệm</div>
+                        </div>
+
+                        <!-- Products Grid -->
+                        <div id="marketplace-grid" class="bento-grid products-grid">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: IDENTITY (MoneID) -->
+                <div id="identity" class="view">
+                    <div class="content-wrapper">
+                        <header class="top-bar">
+                            <div class="header-content">
+                                <h1 id="page-title">MoneID</h1>
+                                <p style="color: #888;">Xác thực danh tính - Nhận ngàn ưu đãi</p>
+                            </div>
+                            <div class="header-actions">
+                                <button class="action-btn" id="scan-qr-btn"><i class="fa-solid fa-qrcode"></i> Quét
+                                    QR</button>
+                            </div>
+                        </header>
+
+                        <!-- Verification Status Grid -->
+                        <div class="section-title">Trạng thái xác thực</div>
+                        <div class="bento-grid verification-grid" style="margin-bottom: 3rem;">
+                            <!-- Student -->
+                            <div class="bento-card verify-card" data-type="student">
+                                <div class="verify-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <div class="verify-info">
+                                    <h3>Học sinh / Sinh viên</h3>
+                                    <p>Ưu đãi Spotify, Apple Music, Rạp phim...</p>
+                                </div>
+                                <div class="verify-status" id="status-student">
+                                    <span class="badge unverified">Chưa xác thực</span>
+                                </div>
+                            </div>
+
+                            <!-- Teacher -->
+                            <div class="bento-card verify-card" data-type="teacher">
+                                <div class="verify-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                                <div class="verify-info">
+                                    <h3>Giáo viên</h3>
+                                    <p>Giảm giá sách, thiết bị điện tử...</p>
+                                </div>
+                                <div class="verify-status" id="status-teacher">
+                                    <span class="badge unverified">Chưa xác thực</span>
+                                </div>
+                            </div>
+
+                            <!-- Military -->
+                            <div class="bento-card verify-card" data-type="military">
+                                <div class="verify-icon"><i class="fa-solid fa-person-military-rifle"></i></div>
+                                <div class="verify-info">
+                                    <h3>Quân nhân</h3>
+                                    <p>Ưu đãi vay vốn, bảo hiểm đặc biệt...</p>
+                                </div>
+                                <div class="verify-status" id="status-military">
+                                    <span class="badge unverified">Chưa xác thực</span>
+                                </div>
+                            </div>
+
+                            <!-- Healthcare -->
+                            <div class="bento-card verify-card" data-type="healthcare">
+                                <div class="verify-icon"><i class="fa-solid fa-user-doctor"></i></div>
+                                <div class="verify-info">
+                                    <h3>Y tế</h3>
+                                    <p>Ưu đãi nghỉ dưỡng, chăm sóc sức khỏe...</p>
+                                </div>
+                                <div class="verify-status" id="status-healthcare">
+                                    <span class="badge unverified">Chưa xác thực</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Benefits Section -->
+                        <div class="section-title">Đặc quyền của bạn</div>
+                        <div class="benefits-list" id="benefits-list">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: SETTINGS -->
+                <div id="settings" class="view">
+                    <div class="content-wrapper settings-wrapper">
+                        <div class="settings-layout">
+                            <!-- Settings Sidebar -->
+                            <aside class="settings-sidebar">
+                                <div class="settings-header">
+                                    <h2>Cài đặt</h2>
+                                    <div class="settings-search">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <input type="text" placeholder="Tìm kiếm cài đặt...">
+                                    </div>
+                                </div>
+                                <ul class="settings-nav">
+                                    <li class="active" data-setting-target="account">
+                                        <div class="nav-icon"><i class="fa-regular fa-user"></i></div>
+                                        <span>Tài khoản</span>
+                                    </li>
+                                    <li data-setting-target="security">
+                                        <div class="nav-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                                        <span>Bảo mật & Đăng nhập</span>
+                                    </li>
+                                    <li data-setting-target="notifications">
+                                        <div class="nav-icon"><i class="fa-regular fa-bell"></i></div>
+                                        <span>Thông báo</span>
+                                    </li>
+                                    <li data-setting-target="privacy">
+                                        <div class="nav-icon"><i class="fa-solid fa-lock"></i></div>
+                                        <span>Quyền riêng tư</span>
+                                    </li>
+                                    <li data-setting-target="billing">
+                                        <div class="nav-icon"><i class="fa-regular fa-credit-card"></i></div>
+                                        <span>Thanh toán & Gói</span>
+                                    </li>
+                                    <li data-setting-target="display">
+                                        <div class="nav-icon"><i class="fa-solid fa-moon"></i></div>
+                                        <span>Giao diện</span>
+                                    </li>
+                                    <li data-setting-target="connections">
+                                        <div class="nav-icon"><i class="fa-solid fa-link"></i></div>
+                                        <span>Liên kết</span>
+                                    </li>
+                                    <li data-setting-target="family">
+                                        <div class="nav-icon"><i class="fa-solid fa-users"></i></div>
+                                        <span>Gia đình</span>
+                                    </li>
+                                    <li data-setting-target="help">
+                                        <div class="nav-icon"><i class="fa-regular fa-life-ring"></i></div>
+                                        <span>Trợ giúp</span>
+                                    </li>
+                                </ul>
+                                <div class="settings-footer">
+                                    <button class="logout-btn">
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
+                                    </button>
+                                </div>
+                            </aside>
+
+                            <!-- Settings Content Area -->
+                            <main class="settings-content-area">
+                                <!-- Account Settings -->
+                                <div id="setting-account" class="setting-panel active">
+                                    <header class="panel-header">
+                                        <h3>Hồ sơ của bạn</h3>
+                                        <p>Quản lý thông tin cá nhân và tài khoản</p>
+                                    </header>
+
+                                    <div class="setting-card">
+                                        <div class="card-row profile-row">
+                                            <div class="profile-avatar-edit">
+                                                <img src="https://ui-avatars.com/api/?name=Mike+N&background=6C63FF&color=fff&size=128"
+                                                    alt="Avatar">
+                                                <button class="edit-avatar-btn"><i
+                                                        class="fa-solid fa-camera"></i></button>
+                                            </div>
+                                            <div class="profile-inputs">
+                                                <div class="input-group">
+                                                    <label>Họ và tên</label>
+                                                    <input type="text" value="Mike Nguyen">
+                                                </div>
+                                                <div class="input-group">
+                                                    <label>Tên hiển thị</label>
+                                                    <input type="text" value="@mikenguyen">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-row">
+                                            <div class="input-group full-width">
+                                                <label>Bio</label>
+                                                <textarea
+                                                    rows="3">Thành viên tích cực. Đam mê tài chính cá nhân.</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-card">
+                                        <h4 class="card-title">Thông tin liên hệ</h4>
+                                        <div class="card-row">
+                                            <div class="input-group">
+                                                <label>Email</label>
+                                                <div class="input-with-icon">
+                                                    <i class="fa-regular fa-envelope"></i>
+                                                    <input type="email" value="mike@example.com">
+                                                </div>
+                                            </div>
+                                            <div class="input-group">
+                                                <label>Số điện thoại</label>
+                                                <div class="input-with-icon">
+                                                    <i class="fa-solid fa-phone"></i>
+                                                    <input type="tel" value="+84 987 654 321">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Security Settings -->
+                                <div id="setting-security" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Bảo mật</h3>
+                                        <p>Giữ tài khoản của bạn an toàn</p>
+                                    </header>
+
+                                    <div class="setting-card">
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <h4>Xác thực 2 bước (2FA)</h4>
+                                                <p>Thêm một lớp bảo mật bằng tin nhắn văn bản hoặc ứng dụng xác thực.
+                                                </p>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <h4>Cảnh báo đăng nhập</h4>
+                                                <p>Nhận thông báo khi có đăng nhập từ thiết bị lạ.</p>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="setting-card">
+                                        <h4 class="card-title">Đổi mật khẩu</h4>
+                                        <div class="input-group full-width">
+                                            <label>Mật khẩu hiện tại</label>
+                                            <input type="password" placeholder="••••••••">
+                                        </div>
+                                        <div class="card-row">
+                                            <div class="input-group">
+                                                <label>Mật khẩu mới</label>
+                                                <input type="password" placeholder="••••••••">
+                                            </div>
+                                            <div class="input-group">
+                                                <label>Xác nhận mật khẩu mới</label>
+                                                <input type="password" placeholder="••••••••">
+                                            </div>
+                                        </div>
+                                        <div class="card-actions right">
+                                            <button class="btn-secondary">Hủy</button>
+                                            <button class="btn-primary">Lưu thay đổi</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Notifications Settings -->
+                                <div id="setting-notifications" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Thông báo</h3>
+                                        <p>Chọn cách bạn muốn nhận thông báo</p>
+                                    </header>
+
+                                    <div class="setting-card">
+                                        <h4 class="card-title">Hoạt động tài chính</h4>
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <h4>Biến động số dư</h4>
+                                                <p>Khi có tiền vào hoặc ra khỏi tài khoản.</p>
+                                            </div>
+                                            <div class="checkbox-group">
+                                                <label><input type="checkbox" checked> Push</label>
+                                                <label><input type="checkbox" checked> Email</label>
+                                            </div>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <h4>Nhắc nhở thanh toán</h4>
+                                                <p>Trước khi đến hạn thanh toán hóa đơn.</p>
+                                            </div>
+                                            <div class="checkbox-group">
+                                                <label><input type="checkbox" checked> Push</label>
+                                                <label><input type="checkbox" checked> Email</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Privacy Settings -->
+                                <div id="setting-privacy" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Quyền riêng tư</h3>
+                                        <p>Quản lý dữ liệu và quyền riêng tư của bạn</p>
+                                    </header>
+                                    <div class="setting-card">
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <h4>Hiển thị hồ sơ công khai</h4>
+                                                <p>Cho phép người khác tìm thấy bạn qua email hoặc số điện thoại.</p>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox">
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Billing Settings -->
+                                <div id="setting-billing" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Thanh toán & Gói</h3>
+                                        <p>Quản lý phương thức thanh toán và gói thành viên</p>
+                                    </header>
+                                    <div class="setting-card premium-card">
+                                        <div class="premium-badge">MEMBER GOLD</div>
+                                        <div class="plan-info">
+                                            <h4>Gói Thành Viên Vàng</h4>
+                                            <p>Gia hạn ngày: 01/01/2026</p>
+                                        </div>
+                                        <button class="btn-outline-white">Quản lý</button>
+                                    </div>
+                                </div>
+
+                                <!-- Display Settings -->
+                                <div id="setting-display" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Giao diện</h3>
+                                        <p>Tùy chỉnh trải nghiệm hình ảnh của bạn</p>
+                                    </header>
+                                    <div class="setting-card">
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <h4>Chế độ tối (Dark Mode)</h4>
+                                                <p>Giao diện tối giúp bảo vệ mắt.</p>
+                                            </div>
+                                            <label class="toggle-switch">
+                                                <input type="checkbox" checked disabled>
+                                                <span class="slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Connections Settings -->
+                                <div id="setting-connections" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Liên kết tài khoản</h3>
+                                        <p>Quản lý các tài khoản mạng xã hội đã liên kết</p>
+                                    </header>
+                                    <div class="setting-card">
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <div class="social-icon-wrapper"
+                                                    style="background: #1877F2; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </div>
+                                                <div class="item-text-content">
+                                                    <h4>Facebook</h4>
+                                                    <p>Liên kết để tìm bạn bè và đăng nhập nhanh.</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn-outline-white small"
+                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Kết nối</button>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <div class="social-icon-wrapper"
+                                                    style="background: #DB4437; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                                    <i class="fa-brands fa-google"></i>
+                                                </div>
+                                                <div class="item-text-content">
+                                                    <h4>Google</h4>
+                                                    <p>Đã liên kết với mike@example.com</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn-secondary small"
+                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Hủy</button>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <div class="social-icon-wrapper"
+                                                    style="background: #000000; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
+                                                    <i class="fa-brands fa-tiktok"></i>
+                                                </div>
+                                                <div class="item-text-content">
+                                                    <h4>TikTok</h4>
+                                                    <p>Đồng bộ xu hướng tài chính.</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn-outline-white small"
+                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Kết nối</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Family Settings -->
+                                <div id="setting-family" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Gia đình & Chia sẻ</h3>
+                                        <p>Quản lý tài chính chung và thành viên gia đình</p>
+                                    </header>
+                                    <div class="setting-card family-card" style="text-align: center; padding: 2rem;">
+                                        <div class="family-avatars"
+                                            style="display: flex; justify-content: center; margin-bottom: 1rem;">
+                                            <img src="https://ui-avatars.com/api/?name=Mike+N&background=6C63FF&color=fff"
+                                                style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #1e1e24; margin-right: -15px; z-index: 2;">
+                                            <img src="https://ui-avatars.com/api/?name=Sarah+J&background=FF6584&color=fff"
+                                                style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #1e1e24; z-index: 1;">
+                                            <div
+                                                style="width: 60px; height: 60px; border-radius: 50%; background: #2d2d3a; display: flex; align-items: center; justify-content: center; margin-left: -15px; z-index: 0; border: 3px solid #1e1e24;">
+                                                <i class="fa-solid fa-plus"></i>
+                                            </div>
+                                        </div>
+                                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Gia đình Nguyễn</h4>
+                                        <p style="color: #888; margin-bottom: 1.5rem;">2 Thành viên • Gói Premium Family
+                                        </p>
+                                        <button class="btn-primary full-width"><i class="fa-solid fa-user-plus"></i> Mời
+                                            thành viên mới</button>
+                                    </div>
+                                    <div class="setting-card">
+                                        <h4 class="card-title">Ví chung</h4>
+                                        <div class="setting-item-row">
+                                            <div class="item-info">
+                                                <div class="icon-box"
+                                                    style="width: 40px; height: 40px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                                    <i class="fa-solid fa-plane"></i>
+                                                </div>
+                                                <div>
+                                                    <h4>Quỹ du lịch 2026</h4>
+                                                    <p style="color: #00C853;">45.000.000₫</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn-outline-white small"
+                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Chi tiết</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Help Settings -->
+                                <div id="setting-help" class="setting-panel">
+                                    <header class="panel-header">
+                                        <h3>Trợ giúp & Pháp lý</h3>
+                                        <p>Trung tâm hỗ trợ và tài liệu</p>
+                                    </header>
+                                    <div class="setting-card">
+                                        <div class="help-item-row"
+                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
+                                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                                <i class="fa-regular fa-circle-question"
+                                                    style="font-size: 1.2rem; color: var(--primary);"></i>
+                                                <span>Trung tâm trợ giúp</span>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-right"
+                                                style="color: #666; font-size: 0.9rem;"></i>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="help-item-row"
+                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
+                                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                                <i class="fa-solid fa-book"
+                                                    style="font-size: 1.2rem; color: var(--primary);"></i>
+                                                <span>Tài liệu hướng dẫn</span>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-right"
+                                                style="color: #666; font-size: 0.9rem;"></i>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="help-item-row"
+                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
+                                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                                <i class="fa-solid fa-bug"
+                                                    style="font-size: 1.2rem; color: #ff4757;"></i>
+                                                <span>Báo cáo sự cố</span>
+                                            </div>
+                                            <i class="fa-solid fa-chevron-right"
+                                                style="color: #666; font-size: 0.9rem;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="setting-card">
+                                        <h4 class="card-title">Pháp lý</h4>
+                                        <div class="help-item-row"
+                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
+                                            <span>Điều khoản dịch vụ</span>
+                                            <i class="fa-solid fa-arrow-up-right-from-square"
+                                                style="color: #666; font-size: 0.8rem;"></i>
+                                        </div>
+                                        <div class="divider"></div>
+                                        <div class="help-item-row"
+                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
+                                            <span>Chính sách quyền riêng tư</span>
+                                            <i class="fa-solid fa-arrow-up-right-from-square"
+                                                style="color: #666; font-size: 0.8rem;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </main>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Bottom Nav (Mobile Navigation) -->
+            <nav class="bottom-nav">
+                <div class="nav-item active" data-tab="profile">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Tài chính</span>
+                </div>
+                <div class="nav-item" data-tab="journey">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Hành trình</span>
+                </div>
+                <div class="nav-item" data-tab="marketplace">
+                    <i class="fa-solid fa-store"></i>
+                    <span>Cửa hàng</span>
+                </div>
+                <div class="nav-item" data-tab="identity">
+                    <i class="fa-solid fa-id-card"></i>
+                    <span>Định danh</span>
+                </div>
+                <div class="nav-item" data-tab="settings">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Cài đặt</span>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Verification Modal -->
+    <div id="verify-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-header">
+                <div class="modal-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h2>Xác thực MoneID</h2>
+                <p>Vui lòng cung cấp thông tin để xác thực trạng thái <span id="modal-verify-type"
+                        style="color: var(--primary); font-weight: 700;">...</span></p>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" value="Nguyen Van Mike" disabled>
+                </div>
+                <div class="form-group">
+                    <label>Email tổ chức / Trường học</label>
+                    <input type="email" placeholder="name@school.edu.vn">
+                </div>
+                <div class="form-group">
+                    <label>Tải lên giấy tờ (Thẻ SV, Quyết định...)</label>
+                    <div class="upload-box" id="upload-trigger">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                        <p id="upload-text">Nhấn để tải ảnh lên</p>
+                        <input type="file" id="verify-file-input" hidden accept="image/*,.pdf">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" id="confirm-verify-btn">Gửi yêu cầu xác thực</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
