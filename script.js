@@ -768,27 +768,309 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial render of benefits
     renderBenefits();
 
-    // --- Settings Navigation ---
-    const settingsNavItems = document.querySelectorAll('.settings-nav li');
-    const settingsPanels = document.querySelectorAll('.setting-panel');
+    // --- Toast Notification System ---
+    function showToast(title, message, type = 'info') {
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
 
-    if (settingsNavItems.length > 0) {
-        settingsNavItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const targetId = item.getAttribute('data-setting-target');
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
 
-                // Update Nav
-                settingsNavItems.forEach(nav => nav.classList.remove('active'));
-                item.classList.add('active');
+        const iconMap = {
+            success: 'fa-circle-check',
+            info: 'fa-circle-info',
+            warning: 'fa-triangle-exclamation'
+        };
 
-                // Update Panels
-                settingsPanels.forEach(panel => {
-                    panel.classList.remove('active');
-                    if (panel.id === `setting-${targetId}`) {
-                        panel.classList.add('active');
-                    }
-                });
-            });
-        });
+        toast.innerHTML = `
+            <div class="toast-icon"><i class="fa-solid ${iconMap[type]}"></i></div>
+            <div class="toast-content">
+                <h4>${title}</h4>
+                <p>${message}</p>
+            </div>
+        `;
+
+        container.appendChild(toast);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.style.animation = 'toastOut 0.4s forwards';
+            setTimeout(() => {
+                toast.remove();
+            }, 400);
+        }, 3000);
     }
+
+    // --- Settings Navigation Logic ---
+    const settingsHome = document.getElementById('settings-home');
+    const settingsDetail = document.getElementById('settings-detail');
+    const settingsDetailTitle = document.getElementById('settings-detail-title');
+    const settingsDetailContent = document.getElementById('settings-detail-content');
+    const settingsBackBtn = document.getElementById('settings-back-btn');
+
+    // Settings Content Data
+    const settingsData = {
+        'security': {
+            title: 'Bảo mật & Đăng nhập',
+            content: `
+                <div class="form-group">
+                    <label>Mật khẩu hiện tại</label>
+                    <input type="password" placeholder="********">
+                </div>
+                <div class="form-group">
+                    <label>Mật khẩu mới</label>
+                    <input type="password" placeholder="********">
+                </div>
+                <div class="form-group">
+                    <label>Xác nhận mật khẩu mới</label>
+                    <input type="password" placeholder="********">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; margin-top: 20px;">
+                    <label style="margin:0;">Xác thực 2 yếu tố (2FA)</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Đăng nhập sinh trắc học</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <button class="btn-primary">Cập nhật mật khẩu</button>
+            `
+        },
+        'notifications': {
+            title: 'Cài đặt thông báo',
+            content: `
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Thông báo đẩy</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Email khuyến mãi</label>
+                    <input type="checkbox" style="width: auto; transform: scale(1.5);">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Biến động số dư</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Nhắc nhở thanh toán</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <button class="btn-primary">Lưu cài đặt</button>
+            `
+        },
+        'privacy': {
+            title: 'Quyền riêng tư',
+            content: `
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Hiển thị số dư ngoài màn hình chính</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Cho phép tìm kiếm bằng SĐT</label>
+                    <input type="checkbox" checked style="width: auto; transform: scale(1.5);">
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; justify-content: space-between;">
+                    <label style="margin:0;">Chia sẻ dữ liệu ẩn danh</label>
+                    <input type="checkbox" style="width: auto; transform: scale(1.5);">
+                </div>
+                <button class="btn-primary">Lưu thay đổi</button>
+            `
+        },
+        'payment': {
+            title: 'Thanh toán & Gói',
+            content: `
+                <div class="bento-card" style="background: linear-gradient(135deg, #6C63FF 0%, #4834d4 100%); padding: 20px; margin-bottom: 20px;">
+                    <h3 style="margin: 0 0 10px; color: white;">Gói Premium</h3>
+                    <p style="margin: 0 0 20px; color: rgba(255,255,255,0.8);">Hạn dùng: 12/12/2025</p>
+                    <button style="background: white; color: #6C63FF; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 600;">Gia hạn</button>
+                </div>
+                <div class="form-group">
+                    <label>Phương thức thanh toán mặc định</label>
+                    <select>
+                        <option>Ví Mone (***888)</option>
+                        <option>Visa Debit (***1234)</option>
+                    </select>
+                </div>
+                <button class="btn-primary">Quản lý phương thức thanh toán</button>
+            `
+        },
+        'linked-accounts': {
+            title: 'Liên kết tài khoản',
+            content: `
+                <div class="settings-list" style="margin: 0;">
+                    <div class="settings-item">
+                        <span class="settings-icon" style="color: #1877F2;"><i class="fa-brands fa-facebook"></i></span>
+                        <span class="settings-label">Facebook</span>
+                        <span class="settings-value">Đã liên kết</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-icon" style="color: #DB4437;"><i class="fa-brands fa-google"></i></span>
+                        <span class="settings-label">Google</span>
+                        <span class="settings-value">mikenguyen@gmail.com</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-icon" style="color: #000;"><i class="fa-brands fa-apple"></i></span>
+                        <span class="settings-label">Apple ID</span>
+                        <span class="settings-chevron">Liên kết</span>
+                    </div>
+                </div>
+            `
+        },
+        'appearance': {
+            title: 'Giao diện',
+            content: `
+                <div class="form-group">
+                    <label>Chế độ hiển thị</label>
+                    <select id="theme-select">
+                        <option value="dark" selected>Tối (Mặc định)</option>
+                        <option value="light">Sáng</option>
+                        <option value="system">Theo hệ thống</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Màu chủ đạo</label>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #6C63FF; border: 2px solid white;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #00C853;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #E50914;"></div>
+                        <div style="width: 30px; height: 30px; border-radius: 50%; background: #FFD700;"></div>
+                    </div>
+                </div>
+                <button class="btn-primary">Áp dụng</button>
+            `
+        },
+        'family': {
+            title: 'Gia đình',
+            content: `
+                <div style="text-align: center; padding: 40px 20px;">
+                    <i class="fa-solid fa-people-roof" style="font-size: 48px; color: rgba(255,255,255,0.2); margin-bottom: 20px;"></i>
+                    <p>Tạo nhóm gia đình để chia sẻ hạn mức và quản lý chi tiêu chung.</p>
+                    <button class="btn-primary" style="margin-top: 20px;">Tạo nhóm gia đình</button>
+                </div>
+            `
+        },
+        'help': {
+            title: 'Trợ giúp & Hỗ trợ',
+            content: `
+                <div class="settings-list" style="margin: 0;">
+                    <div class="settings-item">
+                        <span class="settings-icon">📚</span>
+                        <span class="settings-label">Hướng dẫn sử dụng</span>
+                        <span class="settings-chevron">›</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-icon">💬</span>
+                        <span class="settings-label">Chat với hỗ trợ</span>
+                        <span class="settings-chevron">›</span>
+                    </div>
+                    <div class="settings-item">
+                        <span class="settings-icon">📞</span>
+                        <span class="settings-label">Hotline: 1900 1234</span>
+                        <span class="settings-chevron">›</span>
+                    </div>
+                </div>
+            `
+        },
+        'profile-edit': {
+            title: 'Chỉnh sửa hồ sơ',
+            content: `
+                <div class="profile-avatar-edit" style="text-align: center; margin-bottom: 2rem;">
+                    <img src="https://ui-avatars.com/api/?name=Mike+N&background=6C63FF&color=fff" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary);">
+                    <div style="margin-top: 1rem; color: var(--primary); cursor: pointer;">Thay đổi ảnh đại diện</div>
+                </div>
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" value="Mike Nguyen">
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" value="@mikenguyen">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" value="mike@example.com">
+                </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="tel" value="0912345678">
+                </div>
+                <button class="btn-primary">Lưu thông tin</button>
+            `
+        }
+    };
+
+    function openSettingsDetail(key, titleOverride = null) {
+        const data = settingsData[key];
+        if (!data && !titleOverride) return;
+
+        const title = titleOverride || data.title;
+        const content = data ? data.content : `<p style="text-align: center; padding: 20px; color: #888;">Nội dung đang cập nhật...</p>`;
+
+        if (settingsDetailTitle) settingsDetailTitle.textContent = title;
+        if (settingsDetailContent) settingsDetailContent.innerHTML = content;
+
+        if (settingsHome) settingsHome.style.display = 'none';
+        if (settingsDetail) settingsDetail.style.display = 'flex';
+    }
+
+    function closeSettingsDetail() {
+        if (settingsDetail) settingsDetail.style.display = 'none';
+        if (settingsHome) settingsHome.style.display = 'block';
+    }
+
+    // Back Button
+    if (settingsBackBtn) {
+        settingsBackBtn.addEventListener('click', closeSettingsDetail);
+    }
+
+    // Event Delegation for Settings Items
+    document.body.addEventListener('click', (e) => {
+        // Settings Item
+        const settingsItem = e.target.closest('.settings-item');
+        if (settingsItem) {
+            const key = settingsItem.getAttribute('data-setting');
+            const label = settingsItem.querySelector('.settings-label')?.textContent;
+
+            // Visual feedback
+            settingsItem.style.backgroundColor = 'rgba(255,255,255,0.1)';
+            setTimeout(() => settingsItem.style.backgroundColor = '', 200);
+
+            if (key) {
+                openSettingsDetail(key);
+            } else if (label) {
+                // Fallback for items without key (e.g. inside detail view)
+                console.log('Clicked item without key:', label);
+            }
+            return;
+        }
+
+        // Profile Edit Button
+        const profileEdit = e.target.closest('.profile-edit-btn');
+        if (profileEdit) {
+            openSettingsDetail('profile-edit');
+            return;
+        }
+
+        // Logout Button
+        const logoutBtn = e.target.closest('.logout-button');
+        if (logoutBtn) {
+            if (confirm('Bạn có chắc chắn muốn đăng xuất khỏi Mone?')) {
+                showToast('Đăng xuất', 'Đã đăng xuất thành công!', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            }
+            return;
+        }
+
+        // Dynamic Buttons inside Detail View
+        if (e.target.classList.contains('btn-primary') && settingsDetail.style.display !== 'none') {
+            showToast('Thành công', 'Đã lưu thay đổi!', 'success');
+            closeSettingsDetail();
+        }
+    });
 });

@@ -306,420 +306,114 @@
 
                 <!-- TAB 5: SETTINGS -->
                 <div id="settings" class="view">
-                    <div class="content-wrapper settings-wrapper">
-                        <div class="settings-layout">
-                            <!-- Settings Sidebar -->
-                            <aside class="settings-sidebar">
-                                <div class="settings-header">
-                                    <h2>Cài đặt</h2>
-                                    <div class="settings-search">
-                                        <i class="fa-solid fa-magnifying-glass"></i>
-                                        <input type="text" placeholder="Tìm kiếm cài đặt...">
+                    <div class="settings-redesign-container">
+                        <!-- Settings Home View -->
+                        <div id="settings-home">
+                            <!-- Header -->
+                            <div class="settings-header-mobile">
+                                <h1>Cài đặt</h1>
+                            </div>
+
+                            <!-- Profile Card -->
+                            <div class="profile-card-mobile">
+                                <div class="profile-content">
+                                    <div class="profile-avatar">MN</div>
+                                    <div class="profile-info">
+                                        <h2>Mike Nguyen</h2>
+                                        <p>@mikenguyen</p>
+                                    </div>
+                                    <div class="profile-edit-btn">
+                                        <span>✏️</span>
                                     </div>
                                 </div>
-                                <ul class="settings-nav">
-                                    <li class="active" data-setting-target="account">
-                                        <div class="nav-icon"><i class="fa-regular fa-user"></i></div>
-                                        <span>Tài khoản</span>
-                                    </li>
-                                    <li data-setting-target="security">
-                                        <div class="nav-icon"><i class="fa-solid fa-shield-halved"></i></div>
-                                        <span>Bảo mật & Đăng nhập</span>
-                                    </li>
-                                    <li data-setting-target="notifications">
-                                        <div class="nav-icon"><i class="fa-regular fa-bell"></i></div>
-                                        <span>Thông báo</span>
-                                    </li>
-                                    <li data-setting-target="privacy">
-                                        <div class="nav-icon"><i class="fa-solid fa-lock"></i></div>
-                                        <span>Quyền riêng tư</span>
-                                    </li>
-                                    <li data-setting-target="billing">
-                                        <div class="nav-icon"><i class="fa-regular fa-credit-card"></i></div>
-                                        <span>Thanh toán & Gói</span>
-                                    </li>
-                                    <li data-setting-target="display">
-                                        <div class="nav-icon"><i class="fa-solid fa-moon"></i></div>
-                                        <span>Giao diện</span>
-                                    </li>
-                                    <li data-setting-target="connections">
-                                        <div class="nav-icon"><i class="fa-solid fa-link"></i></div>
-                                        <span>Liên kết</span>
-                                    </li>
-                                    <li data-setting-target="family">
-                                        <div class="nav-icon"><i class="fa-solid fa-users"></i></div>
-                                        <span>Gia đình</span>
-                                    </li>
-                                    <li data-setting-target="help">
-                                        <div class="nav-icon"><i class="fa-regular fa-life-ring"></i></div>
-                                        <span>Trợ giúp</span>
-                                    </li>
-                                </ul>
-                                <div class="settings-footer">
-                                    <button class="logout-btn">
-                                        <i class="fa-solid fa-arrow-right-from-bracket"></i> Đăng xuất
-                                    </button>
-                                </div>
-                            </aside>
+                            </div>
 
-                            <!-- Settings Content Area -->
-                            <main class="settings-content-area">
-                                <!-- Account Settings -->
-                                <div id="setting-account" class="setting-panel active">
-                                    <header class="panel-header">
-                                        <h3>Hồ sơ của bạn</h3>
-                                        <p>Quản lý thông tin cá nhân và tài khoản</p>
-                                    </header>
-
-                                    <div class="setting-card">
-                                        <div class="card-row profile-row">
-                                            <div class="profile-avatar-edit">
-                                                <img src="https://ui-avatars.com/api/?name=Mike+N&background=6C63FF&color=fff&size=128"
-                                                    alt="Avatar">
-                                                <button class="edit-avatar-btn"><i
-                                                        class="fa-solid fa-camera"></i></button>
-                                            </div>
-                                            <div class="profile-inputs">
-                                                <div class="input-group">
-                                                    <label>Họ và tên</label>
-                                                    <input type="text" value="Mike Nguyen">
-                                                </div>
-                                                <div class="input-group">
-                                                    <label>Tên hiển thị</label>
-                                                    <input type="text" value="@mikenguyen">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-row">
-                                            <div class="input-group full-width">
-                                                <label>Bio</label>
-                                                <textarea
-                                                    rows="3">Thành viên tích cực. Đam mê tài chính cá nhân.</textarea>
-                                            </div>
-                                        </div>
+                            <!-- Settings Groups -->
+                            <!-- Group 1: Tài khoản -->
+                            <div class="settings-group">
+                                <h3>Tài khoản</h3>
+                                <div class="settings-list">
+                                    <div class="settings-item" data-setting="security">
+                                        <span class="settings-icon">🔐</span>
+                                        <span class="settings-label">Bảo mật & Đăng nhập</span>
+                                        <span class="settings-chevron">›</span>
                                     </div>
-
-                                    <div class="setting-card">
-                                        <h4 class="card-title">Thông tin liên hệ</h4>
-                                        <div class="card-row">
-                                            <div class="input-group">
-                                                <label>Email</label>
-                                                <div class="input-with-icon">
-                                                    <i class="fa-regular fa-envelope"></i>
-                                                    <input type="email" value="mike@example.com">
-                                                </div>
-                                            </div>
-                                            <div class="input-group">
-                                                <label>Số điện thoại</label>
-                                                <div class="input-with-icon">
-                                                    <i class="fa-solid fa-phone"></i>
-                                                    <input type="tel" value="+84 987 654 321">
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div class="settings-item" data-setting="notifications">
+                                        <span class="settings-icon">🔔</span>
+                                        <span class="settings-label">Thông báo</span>
+                                        <span class="settings-chevron">›</span>
+                                    </div>
+                                    <div class="settings-item" data-setting="privacy">
+                                        <span class="settings-icon">🔒</span>
+                                        <span class="settings-label">Quyền riêng tư</span>
+                                        <span class="settings-chevron">›</span>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Security Settings -->
-                                <div id="setting-security" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Bảo mật</h3>
-                                        <p>Giữ tài khoản của bạn an toàn</p>
-                                    </header>
-
-                                    <div class="setting-card">
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <h4>Xác thực 2 bước (2FA)</h4>
-                                                <p>Thêm một lớp bảo mật bằng tin nhắn văn bản hoặc ứng dụng xác thực.
-                                                </p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox" checked>
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <h4>Cảnh báo đăng nhập</h4>
-                                                <p>Nhận thông báo khi có đăng nhập từ thiết bị lạ.</p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox" checked>
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
+                            <!-- Group 2: Thanh toán -->
+                            <div class="settings-group">
+                                <h3>Thanh toán</h3>
+                                <div class="settings-list">
+                                    <div class="settings-item" data-setting="payment">
+                                        <span class="settings-icon">💳</span>
+                                        <span class="settings-label">Thanh toán & Gói</span>
+                                        <span class="settings-chevron">›</span>
                                     </div>
-
-                                    <div class="setting-card">
-                                        <h4 class="card-title">Đổi mật khẩu</h4>
-                                        <div class="input-group full-width">
-                                            <label>Mật khẩu hiện tại</label>
-                                            <input type="password" placeholder="••••••••">
-                                        </div>
-                                        <div class="card-row">
-                                            <div class="input-group">
-                                                <label>Mật khẩu mới</label>
-                                                <input type="password" placeholder="••••••••">
-                                            </div>
-                                            <div class="input-group">
-                                                <label>Xác nhận mật khẩu mới</label>
-                                                <input type="password" placeholder="••••••••">
-                                            </div>
-                                        </div>
-                                        <div class="card-actions right">
-                                            <button class="btn-secondary">Hủy</button>
-                                            <button class="btn-primary">Lưu thay đổi</button>
-                                        </div>
+                                    <div class="settings-item" data-setting="linked-accounts">
+                                        <span class="settings-icon">🔗</span>
+                                        <span class="settings-label">Liên kết tài khoản</span>
+                                        <span class="settings-chevron">›</span>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Notifications Settings -->
-                                <div id="setting-notifications" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Thông báo</h3>
-                                        <p>Chọn cách bạn muốn nhận thông báo</p>
-                                    </header>
-
-                                    <div class="setting-card">
-                                        <h4 class="card-title">Hoạt động tài chính</h4>
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <h4>Biến động số dư</h4>
-                                                <p>Khi có tiền vào hoặc ra khỏi tài khoản.</p>
-                                            </div>
-                                            <div class="checkbox-group">
-                                                <label><input type="checkbox" checked> Push</label>
-                                                <label><input type="checkbox" checked> Email</label>
-                                            </div>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <h4>Nhắc nhở thanh toán</h4>
-                                                <p>Trước khi đến hạn thanh toán hóa đơn.</p>
-                                            </div>
-                                            <div class="checkbox-group">
-                                                <label><input type="checkbox" checked> Push</label>
-                                                <label><input type="checkbox" checked> Email</label>
-                                            </div>
-                                        </div>
+                            <!-- Group 3: Cài đặt chung -->
+                            <div class="settings-group">
+                                <h3>Cài đặt chung</h3>
+                                <div class="settings-list">
+                                    <div class="settings-item" data-setting="appearance">
+                                        <span class="settings-icon">🌙</span>
+                                        <span class="settings-label">Giao diện</span>
+                                        <span class="settings-value">Tối</span>
+                                        <span class="settings-chevron">›</span>
+                                    </div>
+                                    <div class="settings-item" data-setting="family">
+                                        <span class="settings-icon">👨‍👩‍👧</span>
+                                        <span class="settings-label">Gia đình</span>
+                                        <span class="settings-chevron">›</span>
+                                    </div>
+                                    <div class="settings-item" data-setting="help">
+                                        <span class="settings-icon">❓</span>
+                                        <span class="settings-label">Trợ giúp</span>
+                                        <span class="settings-chevron">›</span>
                                     </div>
                                 </div>
+                            </div>
 
-                                <!-- Privacy Settings -->
-                                <div id="setting-privacy" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Quyền riêng tư</h3>
-                                        <p>Quản lý dữ liệu và quyền riêng tư của bạn</p>
-                                    </header>
-                                    <div class="setting-card">
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <h4>Hiển thị hồ sơ công khai</h4>
-                                                <p>Cho phép người khác tìm thấy bạn qua email hoặc số điện thoại.</p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox">
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                    </div>
+                            <!-- Logout -->
+                            <div class="logout-section">
+                                <div class="logout-button">
+                                    <span>Đăng xuất</span>
                                 </div>
+                            </div>
 
-                                <!-- Billing Settings -->
-                                <div id="setting-billing" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Thanh toán & Gói</h3>
-                                        <p>Quản lý phương thức thanh toán và gói thành viên</p>
-                                    </header>
-                                    <div class="setting-card premium-card">
-                                        <div class="premium-badge">MEMBER GOLD</div>
-                                        <div class="plan-info">
-                                            <h4>Gói Thành Viên Vàng</h4>
-                                            <p>Gia hạn ngày: 01/01/2026</p>
-                                        </div>
-                                        <button class="btn-outline-white">Quản lý</button>
-                                    </div>
-                                </div>
+                            <!-- Version -->
+                            <p class="version-text">Phiên bản 2.4.1</p>
+                        </div>
 
-                                <!-- Display Settings -->
-                                <div id="setting-display" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Giao diện</h3>
-                                        <p>Tùy chỉnh trải nghiệm hình ảnh của bạn</p>
-                                    </header>
-                                    <div class="setting-card">
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <h4>Chế độ tối (Dark Mode)</h4>
-                                                <p>Giao diện tối giúp bảo vệ mắt.</p>
-                                            </div>
-                                            <label class="toggle-switch">
-                                                <input type="checkbox" checked disabled>
-                                                <span class="slider"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Connections Settings -->
-                                <div id="setting-connections" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Liên kết tài khoản</h3>
-                                        <p>Quản lý các tài khoản mạng xã hội đã liên kết</p>
-                                    </header>
-                                    <div class="setting-card">
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <div class="social-icon-wrapper"
-                                                    style="background: #1877F2; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
-                                                    <i class="fa-brands fa-facebook-f"></i>
-                                                </div>
-                                                <div class="item-text-content">
-                                                    <h4>Facebook</h4>
-                                                    <p>Liên kết để tìm bạn bè và đăng nhập nhanh.</p>
-                                                </div>
-                                            </div>
-                                            <button class="btn-outline-white small"
-                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Kết nối</button>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <div class="social-icon-wrapper"
-                                                    style="background: #DB4437; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
-                                                    <i class="fa-brands fa-google"></i>
-                                                </div>
-                                                <div class="item-text-content">
-                                                    <h4>Google</h4>
-                                                    <p>Đã liên kết với mike@example.com</p>
-                                                </div>
-                                            </div>
-                                            <button class="btn-secondary small"
-                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Hủy</button>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <div class="social-icon-wrapper"
-                                                    style="background: #000000; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; margin-right: 1rem;">
-                                                    <i class="fa-brands fa-tiktok"></i>
-                                                </div>
-                                                <div class="item-text-content">
-                                                    <h4>TikTok</h4>
-                                                    <p>Đồng bộ xu hướng tài chính.</p>
-                                                </div>
-                                            </div>
-                                            <button class="btn-outline-white small"
-                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Kết nối</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Family Settings -->
-                                <div id="setting-family" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Gia đình & Chia sẻ</h3>
-                                        <p>Quản lý tài chính chung và thành viên gia đình</p>
-                                    </header>
-                                    <div class="setting-card family-card" style="text-align: center; padding: 2rem;">
-                                        <div class="family-avatars"
-                                            style="display: flex; justify-content: center; margin-bottom: 1rem;">
-                                            <img src="https://ui-avatars.com/api/?name=Mike+N&background=6C63FF&color=fff"
-                                                style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #1e1e24; margin-right: -15px; z-index: 2;">
-                                            <img src="https://ui-avatars.com/api/?name=Sarah+J&background=FF6584&color=fff"
-                                                style="width: 60px; height: 60px; border-radius: 50%; border: 3px solid #1e1e24; z-index: 1;">
-                                            <div
-                                                style="width: 60px; height: 60px; border-radius: 50%; background: #2d2d3a; display: flex; align-items: center; justify-content: center; margin-left: -15px; z-index: 0; border: 3px solid #1e1e24;">
-                                                <i class="fa-solid fa-plus"></i>
-                                            </div>
-                                        </div>
-                                        <h4 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Gia đình Nguyễn</h4>
-                                        <p style="color: #888; margin-bottom: 1.5rem;">2 Thành viên • Gói Premium Family
-                                        </p>
-                                        <button class="btn-primary full-width"><i class="fa-solid fa-user-plus"></i> Mời
-                                            thành viên mới</button>
-                                    </div>
-                                    <div class="setting-card">
-                                        <h4 class="card-title">Ví chung</h4>
-                                        <div class="setting-item-row">
-                                            <div class="item-info">
-                                                <div class="icon-box"
-                                                    style="width: 40px; height: 40px; background: rgba(255, 215, 0, 0.1); color: #FFD700; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                                                    <i class="fa-solid fa-plane"></i>
-                                                </div>
-                                                <div>
-                                                    <h4>Quỹ du lịch 2026</h4>
-                                                    <p style="color: #00C853;">45.000.000₫</p>
-                                                </div>
-                                            </div>
-                                            <button class="btn-outline-white small"
-                                                style="padding: 0.5rem 1rem; font-size: 0.8rem;">Chi tiết</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Help Settings -->
-                                <div id="setting-help" class="setting-panel">
-                                    <header class="panel-header">
-                                        <h3>Trợ giúp & Pháp lý</h3>
-                                        <p>Trung tâm hỗ trợ và tài liệu</p>
-                                    </header>
-                                    <div class="setting-card">
-                                        <div class="help-item-row"
-                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
-                                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                                <i class="fa-regular fa-circle-question"
-                                                    style="font-size: 1.2rem; color: var(--primary);"></i>
-                                                <span>Trung tâm trợ giúp</span>
-                                            </div>
-                                            <i class="fa-solid fa-chevron-right"
-                                                style="color: #666; font-size: 0.9rem;"></i>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="help-item-row"
-                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
-                                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                                <i class="fa-solid fa-book"
-                                                    style="font-size: 1.2rem; color: var(--primary);"></i>
-                                                <span>Tài liệu hướng dẫn</span>
-                                            </div>
-                                            <i class="fa-solid fa-chevron-right"
-                                                style="color: #666; font-size: 0.9rem;"></i>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="help-item-row"
-                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
-                                            <div style="display: flex; align-items: center; gap: 1rem;">
-                                                <i class="fa-solid fa-bug"
-                                                    style="font-size: 1.2rem; color: #ff4757;"></i>
-                                                <span>Báo cáo sự cố</span>
-                                            </div>
-                                            <i class="fa-solid fa-chevron-right"
-                                                style="color: #666; font-size: 0.9rem;"></i>
-                                        </div>
-                                    </div>
-                                    <div class="setting-card">
-                                        <h4 class="card-title">Pháp lý</h4>
-                                        <div class="help-item-row"
-                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
-                                            <span>Điều khoản dịch vụ</span>
-                                            <i class="fa-solid fa-arrow-up-right-from-square"
-                                                style="color: #666; font-size: 0.8rem;"></i>
-                                        </div>
-                                        <div class="divider"></div>
-                                        <div class="help-item-row"
-                                            style="display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; cursor: pointer;">
-                                            <span>Chính sách quyền riêng tư</span>
-                                            <i class="fa-solid fa-arrow-up-right-from-square"
-                                                style="color: #666; font-size: 0.8rem;"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </main>
+                        <!-- Settings Detail View (Hidden by default) -->
+                        <div id="settings-detail" style="display: none;">
+                            <div class="settings-detail-header">
+                                <button id="settings-back-btn" class="back-btn">
+                                    <i class="fa-solid fa-arrow-left"></i>
+                                </button>
+                                <h2 id="settings-detail-title">Title</h2>
+                                <div style="width: 40px;"></div> <!-- Spacer -->
+                            </div>
+                            <div id="settings-detail-content" class="settings-detail-content">
+                                <!-- Dynamic Content -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -787,7 +481,7 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 
 </html>
