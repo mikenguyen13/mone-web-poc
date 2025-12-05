@@ -2522,3 +2522,10 @@ input:disabled + .slider {
         text-align: center;
     }
 }
+
+.logo-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px var(--primary-glow));
+}

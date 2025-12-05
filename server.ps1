@@ -23,17 +23,25 @@ try {
             if ($filePath.EndsWith(".html")) { $response.ContentType = "text/html" }
             elseif ($filePath.EndsWith(".css")) { $response.ContentType = "text/css" }
             elseif ($filePath.EndsWith(".js")) { $response.ContentType = "application/javascript" }
+            elseif ($filePath.EndsWith(".png")) { $response.ContentType = "image/png" }
+            elseif ($filePath.EndsWith(".jpg") -or $filePath.EndsWith(".jpeg")) { $response.ContentType = "image/jpeg" }
+            elseif ($filePath.EndsWith(".gif")) { $response.ContentType = "image/gif" }
+            elseif ($filePath.EndsWith(".svg")) { $response.ContentType = "image/svg+xml" }
+            elseif ($filePath.EndsWith(".ico")) { $response.ContentType = "image/x-icon" }
             
             $response.ContentLength64 = $bytes.Length
             $response.OutputStream.Write($bytes, 0, $bytes.Length)
             $response.StatusCode = 200
-        } else {
+        }
+        else {
             $response.StatusCode = 404
         }
         $response.Close()
     }
-} catch {
+}
+catch {
     Write-Host "Server stopped."
-} finally {
+}
+finally {
     $listener.Stop()
 }
