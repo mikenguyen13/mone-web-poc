@@ -62,6 +62,15 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', () => switchTab(item.dataset.tab));
     });
 
+    // Logo Click
+    const logoLink = document.getElementById('logo-link');
+    if (logoLink) {
+        logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchTab('profile');
+        });
+    }
+
     // --- Chat / Onboarding Logic ---
     function addMessage(text, sender = 'bot', type = 'text') {
         const msgDiv = document.createElement('div');
