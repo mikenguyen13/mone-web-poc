@@ -1,3 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://mikenguyen13.github.io/mone-web-poc/sitemap.xml
